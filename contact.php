@@ -2,16 +2,14 @@
 
 benodigde stappen:
 
-	in header plaatsen:
+1.	in header plaatsen:
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 
 
-
-	recaptchalib.php in map van contact.php plaatsen
-
+2.	recaptchalib.php in map van contact.php plaatsen
 
 
-	in functions.php toevoegen voor return-path van mail:
+3.	in functions.php toevoegen voor return-path van mail:
 
 	class email_return_path {
 	  	function __construct() {
@@ -22,7 +20,11 @@ benodigde stappen:
 		  	$phpmailer->Sender = $phpmailer->From;
 		}
 	}
+	new email_return_path();
 
+
+4.	domein toevoegen en secret-code ophalen op:
+	https://www.google.com/recaptcha/admin#list
 
 	$secret vullen met secret-code van nocaptcha
 -->
@@ -43,7 +45,7 @@ if ($_POST["g-recaptcha-response"]) {
     );
 }
 
-//function to generate respons
+//function to generate response
 $response = "";
 function my_contact_form_generate_response($type, $message){
 	global $response;
@@ -56,6 +58,7 @@ $not_human			= "Verificatie niet voltooid!";
 $missing_content	= "Vul alstublieft alle vereiste velden in.";
 $email_invalid		= "Het opgegeven mailadres lijkt niet te kloppen.";
 $message_unsent		= "Het bericht kon niet verzonden worden, probeer het alsjeblieft opnieuw.";
+$message_sent		= "Het bericht is verzonden en er wordt spoedig contact met u opgenomen.";
 $recap_error		= "Verificatie niet voltooid!";
  
 //waarden uit formulier ophalen
@@ -66,6 +69,7 @@ $website = $_POST['message_website'];
 $message = $_POST['message_text'];
  
 //php mailer variables
+$subject = "Bericht via xxx"
 $to = get_option('admin_email');
 $headers = 'From: '. $email . "\r\n" . 'Reply-To: ' . $email . "\r\n";
 
